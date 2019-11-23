@@ -1,3 +1,6 @@
 from django.shortcuts import render
+from .models import Candidate
 
-# Create your views here.
+
+def all_candidates(request):
+    return render(request, 'candidates/all.html')
