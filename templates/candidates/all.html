@@ -3,13 +3,37 @@
 
 {% block content %}
 
-<div class="container-fluid text-center filter-fields">
+<div class="container-fluid my-5 mx-auto text-center filter-fields">
+    <h1 class="text-muted text-center my-4">All Candidates</h1>
     <form class="d-flex justify-content-center align-items-center" action="" method="post">
         <input class="" type="text" name="" id="">&nbsp;<i class="fas fa-exchange-alt"></i>&nbsp;
         <input type="text" name="" id="">&nbsp;
         <button class="btn btn-dark"><i class="fas fa-filter"></i></button>
         {% comment %} <input class="btn btn-primary " type="submit" name="" id="" value=""> {% endcomment %}
     </form>
+
+    <table class="table table-striped table-inverse mx-auto my-4">
+        <thead class="thead-inverse">
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">name</th>
+                <th scope="col">edu</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td scope="row">1</td>
+                    <td>test</td>
+                    <td>btech</td>
+                </tr>
+                <tr>
+                    <td scope="row">2</td>
+                    <td>test2</td>
+                    <td>mtech</td>
+                </tr>
+            </tbody>
+    </table>
+
 </div>
 
 

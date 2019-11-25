@@ -121,7 +121,7 @@ class HRRemark(models.Model):
         verbose_name_plural = _("HRRemarks")
 
     def __str__(self):
-        return f'{self.hr.name} review {self.candidate.name}'
+        return f'{self.hr.user.username} review {self.candidate.name}'
 
     def get_absolute_url(self):
         return reverse("HRRemark_detail", kwargs={"pk": self.pk})
