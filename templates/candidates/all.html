@@ -6,31 +6,28 @@
 <div class="container-fluid my-5 mx-auto text-center filter-fields">
     <h1 class="text-muted text-center my-4">All Candidates</h1>
     <form class="d-flex justify-content-center align-items-center" action="" method="post">
-        <input class="" type="text" name="" id="">&nbsp;<i class="fas fa-exchange-alt"></i>&nbsp;
-        <input type="text" name="" id="">&nbsp;
+        <input class="" type="text" name="" id="">&nbsp;<!--<i class="fas fa-exchange-alt"></i>&nbsp;-->
+        {% comment %} <input type="text" name="" id="">&nbsp; {% endcomment %}
         <button class="btn btn-dark"><i class="fas fa-filter"></i></button>
         {% comment %} <input class="btn btn-primary " type="submit" name="" id="" value=""> {% endcomment %}
     </form>
 
-    <table class="table table-striped table-inverse mx-auto my-4">
-        <thead class="thead-inverse">
+    <table class="table table-striped table-hover table-inverse mx-auto my-4">
+        <thead class="">
             <tr>
                 <th scope="col">id</th>
                 <th scope="col">name</th>
-                <th scope="col">edu</th>
+                <th scope="col">Contact no.</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="">
+            {% for candidate in candidates %}
                 <tr>
-                    <td scope="row">1</td>
-                    <td>test</td>
-                    <td>btech</td>
+                    <td scope="row">{{candidate.id}}</td>
+                    <td>{{candidate.name}}</td>
+                    <td>{{candidate.phone_number}}</td>
                 </tr>
-                <tr>
-                    <td scope="row">2</td>
-                    <td>test2</td>
-                    <td>mtech</td>
-                </tr>
+            {% endfor %}
             </tbody>
     </table>
 

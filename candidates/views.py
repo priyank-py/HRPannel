@@ -14,4 +14,10 @@ from django.http import HttpResponse
 
 
 def all_candidates(request):
-    return render(request, 'candidates/all.html')
+    candidates = Candidate.objects.all()
+
+    context = {
+        'candidates': candidates,
+    }
+
+    return render(request, 'candidates/all.html', context)
