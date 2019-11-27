@@ -30,8 +30,15 @@ class Candidate(models.Model):
 
 
 class Education(models.Model):
+    LEVEL_CHOICES = (
+        ('doctorate', 'Doctorate'),
+        ('masters', 'masters'),
+        ('bachelors', 'Bachelors'),
+        ('high_school', 'High School/PUC'),
+    )
     
     candidate = models.ForeignKey(Candidate, verbose_name=_("Candidate"), related_name="educations", on_delete=models.CASCADE)
+    qualification = models.CharField(_("Education level"), choices=LEVEL_CHOICES, max_length=50, blank=True, null=True)
     degree = models.CharField(_("Degree Qualified"), max_length=80)
     start = models.IntegerField(_("From"), choices=YEAR_CHOICES)
     end = models.IntegerField(_("till"), choices=YEAR_CHOICES)
