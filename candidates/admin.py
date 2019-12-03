@@ -2,6 +2,13 @@ from django.contrib import admin
 from .models import Candidate, Education, Experience, Certificate, Skill, HRRemark
 import csv
 from django.http import HttpResponse
+from admin_numeric_filter.admin import NumericFilterModelAdmin, SingleNumericFilter, RangeNumericFilter, \
+    SliderNumericFilter
+
+
+class CustomSliderNumericFilter(SliderNumericFilter):
+    MAX_DECIMALS = 2
+    STEP = 10
 
 
 class ExperienceInline(admin.TabularInline):
@@ -30,8 +37,9 @@ class HRRemarkInline(admin.TabularInline):
 
 
 @admin.register(Candidate)
-class CandidateAdmin(admin.ModelAdmin):
+class CandidateAdmin(NumericFilterModelAdmin):
     inlines = (EducationInline, ExperienceInline, CertificateInline, SkillInline, HRRemarkInline)
+    list_filter = ['educations__qualification', ('educations__marks',CustomSliderNumericFilter), ('current_salary',  SliderNumericFilter), ('expected_salary', SliderNumericFilter)]
     actions = ['export_to_csv',]
 
     def export_to_csv(self, request,queryset):

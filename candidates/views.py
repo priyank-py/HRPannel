@@ -32,15 +32,15 @@ def all_candidates(request):
     # def get_queryset(self):
 def filtered_candidates(request):
     query = request.GET.get('q')
+    education_background = request.GET.get('education')
     candidates = Candidate.objects.all().filter(
-        Q(name__icontains=query) | 
-        Q(phone_number__icontains=query)
+        (Q(name__icontains=query) | 
+        Q(phone_number__icontains=query)) &
+        Q(educations__qualification__icontains=education_background)
     )
     context = {
         'candidates': candidates,
     }
     return render(request, 'candidates/filtered.html', context)
         # return super().get_queryset()
-    
-
     

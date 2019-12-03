@@ -16,7 +16,10 @@ class Candidate(models.Model):
     alternate_number = models.CharField(_("Alternate No."), max_length=50, blank=True, null=True)
     location = models.CharField(_("Location"), max_length=50)
     gender = models.CharField(_("Gender"), choices=(('male', 'Male'), ('female', 'Female')), max_length=50)
-    
+
+    current_salary = models.FloatField(_("Current CTC (in LPA)"), blank=True, null=True)
+    expected_salary = models.FloatField(_("Expected CTC (in LPA)"), blank=True, null=True)
+    resume = models.FileField(_("Candidate Resume"), upload_to='Resumes/%d-%b', max_length=100, blank=True, null=True)
 
     class Meta:
         verbose_name = _("Candidate")
@@ -74,6 +77,11 @@ class Experience(models.Model):
     def __str__(self):
         return self.company
 
+    def total_experience(self):
+        self.total = self.end - self.start
+        self.total_years = self.total.years
+        return self.total_years
+    
 
     def get_absolute_url(self):
         return reverse("Experience_detail", kwargs={"pk": self.pk})
@@ -117,7 +125,7 @@ class Skill(models.Model):
 
 
 class HRRemark(models.Model):
-    candidate = models.ForeignKey(Candidate, verbose_name=_("Candidates"), related_name="remarks", on_delete=models.CASCADE)
+    candidate = models.ForeignKey(Candidate, verbose_name=_("Candidates"), related_name="remarks", on_delete=models.CASCADE, blank=True, null=True)
     hr = models.ForeignKey(HRProfile, verbose_name=_("HR"), on_delete=models.CASCADE)
     remark = models.CharField(_("Remarks"), max_length=150)
     reviewed_on = models.DateField(_("Reviewed on"), auto_now=False, auto_now_add=False, default=timezone.now)
