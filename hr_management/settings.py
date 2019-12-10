@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'admin_numeric_filter',
     'candidates',
     'hr_profile',
+    'clients',
+    'taggit',
+    'nested_admin',
 ]
 
 MIDDLEWARE = [
@@ -129,4 +132,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 
+TAGGIT_CASE_INSENSITIVE = True
 

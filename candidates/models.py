@@ -56,7 +56,6 @@ class Education(models.Model):
     def __str__(self):
         return self.degree
     
-
     def get_absolute_url(self):
         return reverse("Education_detail", kwargs={"pk": self.pk})
 
@@ -125,19 +124,11 @@ class Skill(models.Model):
 
 
 class HRRemark(models.Model):
-    candidate = models.ForeignKey(Candidate, verbose_name=_("Candidates"), related_name="remarks", on_delete=models.CASCADE, blank=True, null=True)
-    hr = models.ForeignKey(HRProfile, verbose_name=_("HR"), on_delete=models.CASCADE)
-    remark = models.CharField(_("Remarks"), max_length=150)
-    reviewed_on = models.DateField(_("Reviewed on"), auto_now=False, auto_now_add=False, default=timezone.now)
+    candidate = models.ForeignKey(Candidate, blank=True, null=True, verbose_name=_("Candidates"), related_name="remarks", on_delete=models.CASCADE)
+    hr = models.ForeignKey(HRProfile, verbose_name=_("HR"), on_delete=models.CASCADE, blank=True, null=True)
+    remark = models.CharField(_("Remarks"), max_length=150, blank=True, null=True)
+    reviewed_on = models.DateField(_("Reviewed on"), auto_now=False, auto_now_add=False)
     
 
-    class Meta:
-        verbose_name = _("HRRemark")
-        verbose_name_plural = _("HRRemarks")
-
-    def __str__(self):
-        return f'{self.hr.user.username} review {self.candidate.name}'
-
-    def get_absolute_url(self):
-        return reverse("HRRemark_detail", kwargs={"pk": self.pk})
+    
 

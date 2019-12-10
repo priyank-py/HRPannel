@@ -21,5 +21,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('hr_profile.urls')),
-    path('candidate/', include('candidates.urls'))
+    path('candidate/', include('candidates.urls')),
+    path('clients/', include('clients.urls')),
+    path('nested_admin/', include('nested_admin.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

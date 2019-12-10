@@ -8,7 +8,7 @@ from admin_numeric_filter.admin import NumericFilterModelAdmin, SingleNumericFil
 
 class CustomSliderNumericFilter(SliderNumericFilter):
     MAX_DECIMALS = 2
-    STEP = 10
+    STEP = 1
 
 
 class ExperienceInline(admin.TabularInline):
@@ -39,7 +39,7 @@ class HRRemarkInline(admin.TabularInline):
 @admin.register(Candidate)
 class CandidateAdmin(NumericFilterModelAdmin):
     inlines = (EducationInline, ExperienceInline, CertificateInline, SkillInline, HRRemarkInline)
-    list_filter = ['educations__qualification', ('educations__marks',CustomSliderNumericFilter), ('current_salary',  SliderNumericFilter), ('expected_salary', SliderNumericFilter)]
+    list_filter = ['educations__qualification', ('educations__marks', CustomSliderNumericFilter), ('current_salary',  CustomSliderNumericFilter), ('expected_salary', CustomSliderNumericFilter)]
     actions = ['export_to_csv',]
 
     def export_to_csv(self, request,queryset):

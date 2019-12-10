@@ -4,6 +4,7 @@ from django.views import View
 from django.http import HttpResponse
 from django.views.generic import ListView
 from django.db.models import Q
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # class GreetingView(View):
 #     greeting = "Good Day"
@@ -16,7 +17,15 @@ from django.db.models import Q
 
 
 def all_candidates(request):
-    candidates = Candidate.objects.all()
+    candidate_list = Candidate.objects.all()
+    page = request.GET.get('page', 1)
+    paginator = Paginator(candidate_list, 1)
+    try:
+        candidates = paginator.page(page)
+    except PageNotAnInteger:
+        candidates = paginator.page(1)
+    except EmptyPage:
+        candidates = paginator.page(paginator.num_pages)
 
     context = {
         'candidates': candidates,
