@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Candidate
+from clients.models import Client, JobDetail
 from django.views import View
 from django.http import HttpResponse
 from django.views.generic import ListView
@@ -19,7 +20,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def all_candidates(request):
     candidate_list = Candidate.objects.all()
     page = request.GET.get('page', 1)
-    paginator = Paginator(candidate_list, 1)
+    paginator = Paginator(candidate_list, 20)
     try:
         candidates = paginator.page(page)
     except PageNotAnInteger:
@@ -53,3 +54,4 @@ def filtered_candidates(request):
     return render(request, 'candidates/filtered.html', context)
         # return super().get_queryset()
     
+

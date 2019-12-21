@@ -2,14 +2,20 @@ from django.contrib import admin
 from .models import Client, ContactPerson, Agreement, JobDetail
 from taggit.admin import Tag
 import nested_admin
-from admin_numeric_filter.admin import NumericFilterModelAdmin, SingleNumericFilter, RangeNumericFilter, \
-    SliderNumericFilter
+from admin_numeric_filter.admin import (
+    NumericFilterModelAdmin, SingleNumericFilter, RangeNumericFilter, SliderNumericFilter
+) 
 # Register your models here.
+
+class CustomSliterAmountFilter(SliderNumericFilter):
+    # MAX_DECIMALS = 1
+    STEP = 500
+
 
 
 class CustomSliderNumericFilter(SliderNumericFilter):
-    MAX_DECIMALS = 2
-    STEP = 1
+    MAX_DECIMALS = 7
+    STEP = 0.1
 
 
 class ContactPersonInline(nested_admin.NestedStackedInline):
@@ -30,6 +36,14 @@ class AgreementInline(nested_admin.NestedStackedInline):
     inlines = (JobDetailInline,)
 
 
+@admin.register(JobDetail)
+class JobDetailAdmin(NumericFilterModelAdmin):
+    list_display = ['client', 'designation', 'min_salary', 'max_salary', 'min_experience',]
+    exclude = ('client',)
+    list_filter = ['client', 'designation', ('min_salary', RangeNumericFilter), ('max_salary', RangeNumericFilter), ('min_experience', CustomSliderNumericFilter)]
+
+
+
 @admin.register(Client)
 class ClientAdmin(nested_admin.NestedModelAdmin, NumericFilterModelAdmin):
     list_display = ['name', 'company_type']
@@ -40,3 +54,4 @@ class ClientAdmin(nested_admin.NestedModelAdmin, NumericFilterModelAdmin):
 
 # admin.site.register(Client)
 admin.site.unregister(Tag)
+# admin.site.register(JobDetail)

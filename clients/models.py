@@ -59,7 +59,9 @@ class Agreement(models.Model):
     end_date = models.DateField(_("End Date"), auto_now=False, auto_now_add=False)
     commission = models.FloatField(_("Commission Percentage"), blank=True, null=True)
     
-    
+    def __str__(self):
+        return f'{self.client.name.capitalize()} Ag. {self.start_date} - {self.end_date}'
+     
 
     class Meta:
         verbose_name = _("Agreement")
@@ -72,6 +74,7 @@ class JobDetail(models.Model):
     client = models.ForeignKey(Client, verbose_name=_("for_client"), on_delete=models.CASCADE, blank=True, null=True)
     designation = models.CharField(_("Designation"), max_length=50)
     required_skills = TaggableManager(verbose_name="Required Skills")
+    description = models.TextField(_("Job description"), blank=True, null=True)
     min_salary = models.PositiveIntegerField(_("Minimum Salary"), blank=True, null=True)
     max_salary = models.PositiveIntegerField(_("Maximum Salary"), blank=True, null=True)
     requirements = models.IntegerField(_("Total Requirements"), blank=True, null=True)
@@ -83,7 +86,7 @@ class JobDetail(models.Model):
     def save(self, *args, **kwargs):
         if not self.client:
             print('Yes!!!!!!!!!!!!!!')
-            client = self.agreement.client
+            self.client = self.agreement.client
         else:
             print('no............')
         super(JobDetail, self).save(*args, **kwargs)
