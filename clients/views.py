@@ -38,4 +38,22 @@ def all_jobs(request):
     return render(request, 'clients/all.html', context)
 
 def filtered_jobs(request):
-    
+    q = request.GET.get('q')
+    client_list = Client.objects.all().filter(name=q)
+    page = request.GET.get('page', 1)
+    paginator = Paginator(client_list, 20)
+    try:
+        clients = paginator.page(page)
+    except PageNotAnInteger:
+        clients = paginator.page(1)
+    except EmptyPage:
+        clients = paginator.page(paginator.num_pages)
+
+    context = {
+        'clients': clients,
+    }
+
+    return render(request, 'clients/all.html', context)
+   
+
+   
