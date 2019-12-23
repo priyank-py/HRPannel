@@ -1,12 +1,16 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
+from stdimage import StdImageField, JPEGField
 import datetime
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
 from hr_profile.models import HRProfile
 
 YEAR_CHOICES = [(i, i) for i in range(2000, datetime.date.today().year + 1)]
+
+def upload_photo_to(instance, filename):
+    return f'{instance.id}-{instance.name}/{filename}'
 
 class Candidate(models.Model):
     name = models.CharField(_("Name"), max_length=50)
@@ -20,6 +24,11 @@ class Candidate(models.Model):
     current_salary = models.FloatField(_("Current CTC (in LPA)"), blank=True, null=True)
     expected_salary = models.FloatField(_("Expected CTC (in LPA)"), blank=True, null=True)
     resume = models.FileField(_("Candidate Resume"), upload_to='Resumes/%d-%b', max_length=100, blank=True, null=True)
+    photo = StdImageField(upload_to=upload_photo_to, blank=True, null=True, variations={
+        'large': (640, 640),
+        'medium': (300, 300),
+        'thumbnail': (25, 25, True)
+    }, delete_orphans=True)
 
     class Meta:
         verbose_name = _("Candidate")

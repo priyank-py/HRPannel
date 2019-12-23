@@ -38,7 +38,7 @@ class AgreementInline(nested_admin.NestedStackedInline):
 
 @admin.register(JobDetail)
 class JobDetailAdmin(NumericFilterModelAdmin):
-    list_display = ['client', 'designation', 'min_salary', 'max_salary', 'min_experience',]
+    list_display = ['id', 'client', 'designation', 'min_salary', 'max_salary', 'min_experience',]
     exclude = ('client',)
     list_filter = ['client', 'designation', ('min_salary', RangeNumericFilter), ('max_salary', RangeNumericFilter), ('min_experience', CustomSliderNumericFilter)]
 

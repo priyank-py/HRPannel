@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'hr_profile',
     'clients',
     'taggit',
+    'stdimage',
     'nested_admin',
 ]
 
@@ -131,6 +132,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 TAGGIT_CASE_INSENSITIVE = True
 

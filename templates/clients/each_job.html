@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <header class="card-header rounded col-md-12 p-4">
+        <h1>{{job.designation|title}}</h1>
+        <div class="mb-2 ml-3"><a href="#">{{job.client.name}}</a></div>
+        <div class="col-md-12">
+            <span class="mr-3"><i class="fas fa-briefcase"></i>&nbsp;&nbsp; {{job.min_experience}}+ yrs exp.</span>
+            <span class="mr-3"><i class="far fa-clock"></i>&nbsp;&nbsp; {{job.job_type}}</span>
+            <span><i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp; {{job.location}}</span>
+        </div>
+    </header>
+    <section class="card card-body">
+        <h3 class="mb-4 ">Description:</h3>
+        <p>{{job.description}}</p>
+        <h3>Required Skills</h3>
+        <ol>
+            {% if job.required_skills %}
+            {% for skill in job.required_skills.all %}
+                <li>{{skill}} </li>
+            {% endfor %}
+            
+            {% endif %}
+        </ol>
+    </section>
+
+</div>
+
+{% endblock content %}
+

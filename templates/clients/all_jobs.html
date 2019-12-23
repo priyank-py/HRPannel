@@ -4,20 +4,21 @@
 {% block content %}
 
 <div class="container-fluid my-5 mx-auto text-center filter-fields">
-    <h1 class="text-muted text-center my-4">All Clients</h1>
-    <form class="form-group" id="search" action="{% url 'filtered_clients' %}" method="get">
+    <h1 class="text-muted text-center my-4">All Jobs</h1>
+    <form class="form-group" id="search" action="{% url 'filtered_jobs' %}" method="get">
         <div class="d-flex justify-content-center align-items-between mx-5">
-            <input class="form-control text-black-50 mx-2 p-4" name="q" type="text" placeholder="Search the Available Clients...">
+            <input class="form-control text-black-50 mx-2 p-4" name="q" type="text" placeholder="Search the Available Jobs...">
             <button type="submit" form="search" value="Search" class="btn btn-dark px-4 py-3">
                 <i class="fas fa-search"></i>
             </button>
         </div> 
         <div class="d-flex justify-content-start align-items-between mx-5">
             <select class="form-control mx-2  text-center" style="width:200px"  name="education">
-                <option value="" disabled selected hidden>--Company Type--</option>
-                <option value="doctorate">MNC</option>
-                <option value="masters">SME</option>
-                <option value="bachelors">Start-up</option>
+                <option value="" disabled selected hidden>--Job Type--</option>
+                <option value="doctorate">Full-Time</option>
+                <option value="masters">Part-Time</option>
+                <option value="masters">Contract</option>
+                <option value="bachelors">Internship</option>
                 
             </select>
         </div>
@@ -29,37 +30,39 @@
         <thead class="">
             <tr>
                 <th scope="col">id</th>
-                <th scope="col">name</th>
-                <th scope="col">Contact no.</th>
+                <th scope="col">Designation</th>
+                <th scope="col">Company</th>
+                <th scope="col">Minimum Exp.</th>
             </tr>
             </thead>
             <tbody class="">
-            {% for client in clients %}
+            {% for job in jobs %}
                 <tr>
-                    <td scope="row">{{client.id}}</td>
-                    <td>{{client.name}}</td>
-                    <td>{{client.address}}</td>
+                    <td scope="row">{{job.id}}</td>
+                    <td><a href="{% url 'each_job' job.id %} ">{{job.designation}}</a></td>
+                    <td><a href="#"> {{job.client}}</a></td>
+                    <td>{{job.min_experience}}</td>
                 </tr>
             {% endfor %}
             </tbody>
     </table>
 
-   {% if clients.has_other_pages %}
+   {% if jobs.has_other_pages %}
     <ul class="pagination d-flex justify-content-center">
-        {% if clients.has_previous %}
-            <li class="btn" ><a href="?page={{clients.previous_page_number}}">&laquo;</a></li>
+        {% if jobs.has_previous %}
+            <li class="btn" ><a href="?page={{jobs.previous_page_number}}">&laquo;</a></li>
         {% else %}
             <li class="btn disabled"><span>&laquo;</span></li>
         {% endif %}
-        {% for i in clients.paginator.page_range %}
-            {% if clients.number == i %}
+        {% for i in jobs.paginator.page_range %}
+            {% if jobs.number == i %}
                 <li class="btn active"><span>{{i}}</span></li>
             {% else %}
                 <li class="btn"><a href="?page={{i}}">{{i}}</a></li>
             {% endif %}
         {% endfor %}
-        {% if clients.has_next %}
-            <li class="btn"><a href="?page={{clients.next_page_number}}">&raquo;</a></li>
+        {% if jobs.has_next %}
+            <li class="btn"><a href="?page={{jobs.next_page_number}}">&raquo;</a></li>
         {% else %}
             <li class="btn disabled"><span>&raquo;</span> </li>
         {% endif %}
