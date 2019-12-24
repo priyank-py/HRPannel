@@ -70,9 +70,19 @@ class Agreement(models.Model):
 
 
 class JobDetail(models.Model):
+
+    TYPE_CHOICES = (
+        ('fulltime', 'Full-Time'),
+        ('parttime', 'Part-Time'),
+        ('contract', 'Contract'),
+        ('internship', 'Internship'),
+    )
+
     agreement = models.ForeignKey(Agreement, verbose_name=_("agreement"), related_name="job_agreement", on_delete=models.CASCADE, blank=True, null=True)
     client = models.ForeignKey(Client, verbose_name=_("for_client"), on_delete=models.CASCADE, blank=True, null=True)
-    designation = models.CharField(_("Designation"), max_length=50)
+    designation = models.CharField(_("Designation"), max_length=20)
+    location = models.CharField(_("Job Location"), max_length=120, blank=True, null=True)
+    job_type = models.CharField(_("Type"), max_length=50, choices=TYPE_CHOICES, blank=True, null=True, default=TYPE_CHOICES[0])
     required_skills = TaggableManager(verbose_name="Required Skills")
     description = models.TextField(_("Job description"), blank=True, null=True)
     min_salary = models.PositiveIntegerField(_("Minimum Salary"), blank=True, null=True)

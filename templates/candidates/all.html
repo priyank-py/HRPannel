@@ -28,6 +28,7 @@
     <table class="table table-striped table-hover table-inverse mx-auto my-4">
         <thead class="">
             <tr>
+                <th scope="col"></th>
                 <th scope="col">id</th>
                 <th scope="col">name</th>
                 <th scope="col">Contact no.</th>
@@ -36,8 +37,9 @@
             <tbody class="">
             {% for candidate in candidates %}
                 <tr>
+                    <td><span>{% if candidate.photo %}<img class="rounded-circle" src="{{candidate.photo.thumbnail.url}}" alt="">{% endif %}</span></td>
                     <td scope="row">{{candidate.id}}</td>
-                    <td>{{candidate.name}}</td>
+                    <td><a href="{% url 'each_candidate' candidate.id %}"> {{candidate.name}}</a></td>
                     <td>{{candidate.phone_number}}</td>
                 </tr>
             {% endfor %}

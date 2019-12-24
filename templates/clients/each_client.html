@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="card col-md-12">
+            <div class="card-body">
+                <div class="card-header text-center">
+                <h1 class="text-center">{{client.name}}</h1>
+                <small class="text-center">{{client.address}} </small>
+                </div>
+                <div class="row">
+                 <div class="card-body col-md-6 mt-5">
+                    <div class="card outline-primary my-3">
+                        <div class="card-header">
+                            Contact Person #1
+                        </div>
+                        <div class="card-body">
+                            name:
+                            Designation:
+                        </div>
+                    </div> 
+                </div>
+                <div class="card-body col-md-6 mt-5">
+                    <div class="card my-3">
+                    <div class="card-header">
+                        Current Agreement Status:            
+                    </div>
+                    <div class="card-body">
+                        Agreement #233b in effect
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+{% endblock content %}

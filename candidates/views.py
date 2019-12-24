@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Candidate
 from clients.models import Client, JobDetail
 from django.views import View
@@ -55,3 +55,9 @@ def filtered_candidates(request):
         # return super().get_queryset()
     
 
+def each_candidate(request, id):
+    candidate = get_object_or_404(Candidate, id=id)
+    context = {
+        'candidate': candidate,
+    }
+    return render(request, 'candidates/each_candidate.html', context)
