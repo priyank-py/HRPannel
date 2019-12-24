@@ -60,6 +60,7 @@ def filtered_clients(request):
 
 def each_client(request, id):
     client = get_object_or_404(Client, id=id)
+    
     context = {
         'client': client,
     }

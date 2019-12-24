@@ -25,6 +25,7 @@ class ContactPersonInline(nested_admin.NestedStackedInline):
 
 class JobDetailInline(nested_admin.NestedTabularInline):
     model = JobDetail
+    fields = ['designation', 'location', 'job_type', 'required_skills', 'min_salary', 'max_salary', 'min_experience', 'requirements','description']
     
     extra = 1
 

@@ -39,8 +39,8 @@
             {% for job in jobs %}
                 <tr>
                     <td scope="row">{{job.id}}</td>
-                    <td><a href="{% url 'each_job' job.id %} ">{{job.designation}}</a></td>
-                    <td><a href="#"> {{job.client}}</a></td>
+                    <td><a href="{% url 'each_job' job.id %} ">{{job.designation|title}}</a></td>
+                    <td><a href="{% url 'each_client' job.client.id %}"> {{job.client|title}}</a></td>
                     <td>{{job.min_experience}}</td>
                 </tr>
             {% endfor %}

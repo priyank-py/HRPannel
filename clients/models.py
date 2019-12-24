@@ -26,7 +26,7 @@ class Client(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("Client_detail", kwargs={"pk": self.pk})
+        return reverse("each_client", kwargs={"pk": self.pk})
 
 
 class ContactPerson(models.Model):
@@ -82,8 +82,8 @@ class JobDetail(models.Model):
     client = models.ForeignKey(Client, verbose_name=_("for_client"), on_delete=models.CASCADE, blank=True, null=True)
     designation = models.CharField(_("Designation"), max_length=20)
     location = models.CharField(_("Job Location"), max_length=120, blank=True, null=True)
-    job_type = models.CharField(_("Type"), max_length=50, choices=TYPE_CHOICES, blank=True, null=True, default=TYPE_CHOICES[0])
-    required_skills = TaggableManager(verbose_name="Required Skills")
+    job_type = models.CharField(_("Type"), max_length=50, choices=TYPE_CHOICES, blank=True, null=True)
+    required_skills = TaggableManager(verbose_name="Required Skills", blank=True)
     description = models.TextField(_("Job description"), blank=True, null=True)
     min_salary = models.PositiveIntegerField(_("Minimum Salary"), blank=True, null=True)
     max_salary = models.PositiveIntegerField(_("Maximum Salary"), blank=True, null=True)
@@ -94,9 +94,10 @@ class JobDetail(models.Model):
         return self.designation
 
     def save(self, *args, **kwargs):
-        if not self.client:
-            print('Yes!!!!!!!!!!!!!!')
-            self.client = self.agreement.client
-        else:
-            print('no............')
-        super(JobDetail, self).save(*args, **kwargs)
+        if self.designation:
+            if not self.client:
+                print('Yes!!!!!!!!!!!!!!')
+                self.client = self.agreement.client
+            else:
+                print('no............')
+            super(JobDetail, self).save(*args, **kwargs)

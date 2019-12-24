@@ -6,20 +6,61 @@
         <div class="card col-md-12">
             <div class="card-body">
                 <div class="card-header text-center">
-                <h1 class="text-center">{{client.name}}</h1>
-                <small class="text-center">{{client.address}} </small>
+                <h1 class="text-center">{{client.name|title}}</h1>
+                <small class="text-center"><i class="fas fa-map-marker-alt"></i> {{client.address}} </small>
                 </div>
                 <div class="row">
                  <div class="card-body col-md-6 mt-5">
-                    <div class="card outline-primary my-3">
-                        <div class="card-header">
-                            Contact Person #1
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!--for loop on contact person-->
+                            {% if client.client_cp.all %}
+                            {% for cp in client.client_cp.all %}
+                            <div class="card outline-primary my-3">
+                                <div class="card-header">
+                                    Contact Person #1
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-borderless">
+                                        <tr>
+                                            <td>Name:</td>
+                                            <td>{{cp.name}} </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Designation:</td>
+                                            <td>{{cp.designation}} </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Contact No:</td>
+                                            <td>{{cp.contact_no}} </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Alternate No:</td>
+                                            <td>{{cp.alternate_no}} </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email ID:</td>
+                                            <td>{{cp.email}} </td>
+                                        </tr>
+                                    </table>
+                                    
+                                </div>
+                            </div> 
+                            {% endfor %}
+                            {% else %}
+                            <div class="card outline-primary my-3">
+                                <div class="card-header">
+                                    Contact Person #1
+                                </div>
+                                <div class="card-body">
+                                    No Contact Peson Yet!
+                                </div>
+                            </div> 
+                            {% endif %}
+                            <!--endfor-->
                         </div>
-                        <div class="card-body">
-                            name:
-                            Designation:
-                        </div>
-                    </div> 
+                    </div>
+                   
                 </div>
                 <div class="card-body col-md-6 mt-5">
                     <div class="card my-3">

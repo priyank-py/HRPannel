@@ -10,8 +10,8 @@
             <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
             <div class="card-header">Jobs Available</div>
                 <div class="card-body">
-                    <h5 class="card-title">Success card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <h5 class="card-title">Available Jobs: {{active_job_num}}</h5>
+                    {% comment %} <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> {% endcomment %}
                 </div>
             </div>
         </div>
@@ -19,17 +19,17 @@
             <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
             <div class="card-header">All Clients</div>
                 <div class="card-body">
-                    <h5 class="card-title">Info card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <h5 class="card-title">All Clients: {{all_clients_count}} </h5>
+                    {% comment %} <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> {% endcomment %}
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-            <div class="card-header">All Candidates</div>
+            <div class="card-header">All Candidates </div>
                 <div class="card-body">
-                    <h5 class="card-title">Dark card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <h5 class="card-title">Total Candidates: {{all_candidates_count}}</h5>
+                    {% comment %} <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> {% endcomment %}
                 </div>
             </div>
         </div>
