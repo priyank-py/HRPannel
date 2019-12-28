@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block style %}
+    .width-sm {
+        max-width: 100px;
+    }
+{% endblock style %}
 
 {% block content %}
 
@@ -28,19 +33,27 @@
     <table class="table table-striped table-hover table-inverse mx-auto my-4">
         <thead class="">
             <tr>
-                <th scope="col"></th>
-                <th scope="col">id</th>
+                <th class="width-sm" scope="col"></th>
+                <th class="width-sm" scope="col">id</th>
                 <th scope="col">name</th>
                 <th scope="col">Contact no.</th>
+                <th>Email</th>
+                <th>Latest Status</th>
+                <th>Latest Remark</th>
+                <th>Last Reviewer</th>
             </tr>
             </thead>
             <tbody class="">
             {% for candidate in candidates %}
                 <tr>
-                    <td><span>{% if candidate.photo %}<img class="rounded-circle" src="{{candidate.photo.thumbnail.url}}" alt="">{% endif %}</span></td>
-                    <td scope="row">{{candidate.id}}</td>
+                    <td class="width-sm"><span>{% if candidate.photo %}<img class="rounded-circle" src="{{candidate.photo.thumbnail.url}}" alt="">{% endif %}</span></td>
+                    <td class="width-sm" scope="row">{{candidate.id}}</td>
                     <td><a href="{% url 'each_candidate' candidate.id %}"> {{candidate.name}}</a></td>
                     <td>{{candidate.phone_number}}</td>
+                    <td>{{candidate.email}} </td>
+                    <td>{{candidate.remarks.last.status}} </td>
+                    <td>{{candidate.remarks.last.remark}} </td>
+                    <td>{{candidate.remarks.last.hr.name}} </td>
                 </tr>
             {% endfor %}
             </tbody>

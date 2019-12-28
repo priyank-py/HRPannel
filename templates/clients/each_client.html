@@ -11,6 +11,7 @@
                 </div>
                 <div class="row">
                  <div class="card-body col-md-6 mt-5">
+
                     <div class="row">
                         <div class="col-md-12">
                             <!--for loop on contact person-->
@@ -18,7 +19,7 @@
                             {% for cp in client.client_cp.all %}
                             <div class="card outline-primary my-3">
                                 <div class="card-header">
-                                    Contact Person #1
+                                    Contact Person #{{forloop.counter}}
                                 </div>
                                 <div class="card-body">
                                     <table class="table table-borderless">
@@ -50,7 +51,7 @@
                             {% else %}
                             <div class="card outline-primary my-3">
                                 <div class="card-header">
-                                    Contact Person #1
+                                    Contact Person #{{forloop.counter}}
                                 </div>
                                 <div class="card-body">
                                     No Contact Peson Yet!
@@ -63,13 +64,53 @@
                    
                 </div>
                 <div class="card-body col-md-6 mt-5">
-                    <div class="card my-3">
-                    <div class="card-header">
-                        Current Agreement Status:            
-                    </div>
-                    <div class="card-body">
-                        Agreement #233b in effect
-                    </div>
+
+                    <div class="row">
+                            {% if client.client_agreement.all %}
+                            {% for agreement in client.client_agreement.all %}
+                                <div class="col-md-12">
+                                    <div class="card my-3">
+                                    <div class="card-header">
+                                        Current Agreement Status #{{forloop.counter}}:            
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Agreement</td>
+                                                    <td>{{agreement}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Status</td>
+                                                    <td>{{agreement.agreement_status}} </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Start Date</td>
+                                                    <td>{{agreement.start_date}} </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>End Date</td>
+                                                    <td>{{agreement.end_date}} </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Commission</td>
+                                                    <td>{{agreement.commission}} %</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {% else %}
+                                <div class="col-md-12">
+                                    <div class="card my-3">
+                                        <h2>No Agreements Yet</h2>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                        
                     </div>
                 </div>
                 </div>

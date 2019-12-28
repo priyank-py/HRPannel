@@ -6,8 +6,12 @@ import datetime
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
 from hr_profile.models import HRProfile
+from tinymce.models import HTMLField
+from taggit.managers import TaggableManager
+from clients.models import Client
 
-YEAR_CHOICES = [(i, i) for i in range(2000, datetime.date.today().year + 1)]
+
+YEAR_CHOICES = [(i, i) for i in range(2000, datetime.date.today().year+3)] 
 
 def upload_photo_to(instance, filename):
     return f'{instance.id}-{instance.name}/{filename}'
@@ -118,7 +122,7 @@ class Skill(models.Model):
     candidate = models.ForeignKey(Candidate, verbose_name=_("Candidates"), related_name='skills', on_delete=models.CASCADE)
     name = models.CharField(_("Skill"), max_length=50)
     experience = models.IntegerField(_("Experience (in Years)"),  validators=[MinValueValidator(0), MaxValueValidator(100)], blank=True, null=True)
-    last_used = models.IntegerField(_("till"), choices=YEAR_CHOICES, blank=True, null=True)
+    last_used = models.IntegerField(_("Last Used"), choices=YEAR_CHOICES, blank=True, null=True)
 
     class Meta:
         verbose_name = _("Skill")
@@ -131,12 +135,27 @@ class Skill(models.Model):
         return reverse("Skill_detail", kwargs={"pk": self.pk})
 
 
+class Project(models.Model):
+    candidate = models.ForeignKey(Candidate, verbose_name=_("Candidates"), on_delete=models.CASCADE)
+    title = models.CharField(_("Project Title"), max_length=50, blank=True, null=True)
+    technologies = TaggableManager(blank=True, verbose_name="Technologies Used")
+    description = HTMLField(_("Description"), blank=True, null=True)
+    role = models.CharField(_("Your Role"), max_length=50, blank=True, null=True)
+
+
 class HRRemark(models.Model):
+
+    STATUSES = (
+        ('waiting', 'Waiting-List'),
+        ('shortlisted', 'Short-Listed'),
+        ('rejected', 'Rejected'),
+        ('not_interested', 'Not-Interested')
+    )
+
     candidate = models.ForeignKey(Candidate, blank=True, null=True, verbose_name=_("Candidates"), related_name="remarks", on_delete=models.CASCADE)
-    hr = models.ForeignKey(HRProfile, verbose_name=_("HR"), on_delete=models.CASCADE, blank=True, null=True)
+    hr = models.ForeignKey(HRProfile, verbose_name=_("HR"), on_delete=models.DO_NOTHING, blank=True, null=True)
     remark = models.CharField(_("Remarks"), max_length=150, blank=True, null=True)
+    status = models.CharField(_("Status"), max_length=50, blank=True, null=True, choices=STATUSES)
+    considered_for = models.ForeignKey(Client, verbose_name=_("Considered for"), on_delete=models.DO_NOTHING, blank=True, null=True)
     reviewed_on = models.DateField(_("Reviewed on"), auto_now=False, auto_now_add=False)
     
-
-    
-

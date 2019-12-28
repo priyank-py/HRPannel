@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from taggit.managers import TaggableManager
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.shortcuts import get_object_or_404
+from tinymce.models import HTMLField
 
 # Create your models here.
 class Client(models.Model):
@@ -60,7 +61,7 @@ class Agreement(models.Model):
     commission = models.FloatField(_("Commission Percentage"), blank=True, null=True)
     
     def __str__(self):
-        return f'{self.client.name.capitalize()} Ag. {self.start_date} - {self.end_date}'
+        return f'{self.client.name.capitalize()} Ag.({self.start_date} - {self.end_date})'
      
 
     class Meta:
@@ -84,10 +85,10 @@ class JobDetail(models.Model):
     location = models.CharField(_("Job Location"), max_length=120, blank=True, null=True)
     job_type = models.CharField(_("Type"), max_length=50, choices=TYPE_CHOICES, blank=True, null=True)
     required_skills = TaggableManager(verbose_name="Required Skills", blank=True)
-    description = models.TextField(_("Job description"), blank=True, null=True)
+    description = HTMLField(_("Job description"), blank=True, null=True)
     min_salary = models.PositiveIntegerField(_("Minimum Salary"), blank=True, null=True)
     max_salary = models.PositiveIntegerField(_("Maximum Salary"), blank=True, null=True)
-    requirements = models.IntegerField(_("Total Requirements"), blank=True, null=True)
+    requirements = models.IntegerField(_("Available Positions"), blank=True, null=True)
     min_experience = models.IntegerField(_("Minimum Experience"), blank=True, null=True)
 
     def __str__(self):

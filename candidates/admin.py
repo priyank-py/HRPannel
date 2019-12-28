@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Candidate, Education, Experience, Certificate, Skill, HRRemark
+from .models import Candidate, Education, Experience, Certificate, Skill, HRRemark, Project
 import csv
 from django.http import HttpResponse
 from admin_numeric_filter.admin import NumericFilterModelAdmin, SingleNumericFilter, RangeNumericFilter, \
@@ -30,6 +30,9 @@ class EducationInline(admin.TabularInline):
     model = Education
     extra = 1
 
+class ProjectInline(admin.TabularInline):
+    model = Project
+    extra = 1
 
 class HRRemarkInline(admin.TabularInline):
     model = HRRemark
@@ -38,7 +41,7 @@ class HRRemarkInline(admin.TabularInline):
 
 @admin.register(Candidate)
 class CandidateAdmin(NumericFilterModelAdmin):
-    inlines = (EducationInline, ExperienceInline, CertificateInline, SkillInline, HRRemarkInline)
+    inlines = (EducationInline, ExperienceInline, CertificateInline, SkillInline, ProjectInline, HRRemarkInline)
     list_filter = ['educations__qualification', ('educations__marks', CustomSliderNumericFilter), ('current_salary',  CustomSliderNumericFilter), ('expected_salary', CustomSliderNumericFilter)]
     actions = ['export_to_csv',]
 

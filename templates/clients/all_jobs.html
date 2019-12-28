@@ -33,6 +33,7 @@
                 <th scope="col">Designation</th>
                 <th scope="col">Company</th>
                 <th scope="col">Minimum Exp.</th>
+                <th>Positions</th>
             </tr>
             </thead>
             <tbody class="">
@@ -42,6 +43,7 @@
                     <td><a href="{% url 'each_job' job.id %} ">{{job.designation|title}}</a></td>
                     <td><a href="{% url 'each_client' job.client.id %}"> {{job.client|title}}</a></td>
                     <td>{{job.min_experience}}</td>
+                    <td>{{job.requirements}}</td>
                 </tr>
             {% endfor %}
             </tbody>

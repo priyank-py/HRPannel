@@ -30,24 +30,41 @@
             </div>
             <div class="card-body">
                 <table class="table table-borderless">
-                    <tr><td>Name:</td> <td>{{candidate.name}}</td></tr>
-                    <tr><td>Dob:</td> <td>{{candidate.dob}} </td></tr>
-                    <tr><td>Email:</td> <td>{{candidate.email}}</td></tr>
-                    <tr><td>Phone no:</td> <td>{{candidate.phone_number}}</td></tr>
-                    <tr><td>Alternate no:</td> <td>{{candidate.alternate_number}}</td></tr>
-                    <tr><td>Location</td><td>{{candidate.location}}</td></tr>
-                    <tr><td>Gender</td><td>{{candidate.gender}}</td></tr>
-                    <tr><td>Current Salary</td><td>{{candidate.current_salary}}</td></tr>
-                    <tr><td>Expected Salary</td><td>{{candidate.expected_salary}} </td></tr>
-
+                    {% if  candidate.experiences.any %}
+                        {% for exp in candidate.experiences.all %}
+                            <tr><td>Company Name</td><td>{{exp.company}}</td></tr>
+                            <tr><td>Job Profile</td><td>{{exp.job_profile}}</td></tr>
+                            <tr><td>Current Company</td><td>{% if exp.current_company %}<input name="" id="" class="btn btn-primary" type="checkbox" checked onclick="return false;">{% endif %}</td></tr>
+                        {% endfor %}
+                    {% else %}
+                    <tr colspan="2">No Experience Added</tr>
+                    {% endif %}
                 </table>
                 
             </div>
         </div>
 
         <div class="card">
+            <div class="card-header">
+                <h3>Skills</h3>
+            </div>
+            <div class="card-body">                
+                <table class="table table-borderless text-center">
+                    <tr><th>Skill</th><th>Experience</th><th>last used</th></tr>
+                    {% if candidate.skills.any %}
+                    {% for skill in candidate.skills.all %}
+                        <tr><td>t{{skill.name}}</td><td>{{skill.experience}}</td><td>{{skill.last_used}}</td></tr>
+                    {% endfor %}
+                    {% else %}
+                        <tr><td>-</td><td>-</td><td>-</td></tr >
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
             {% if candidate.resume %}
-            <iframe src="{{candidate.resume.url}}" width="100%" height="500px">
+            <iframe src="{{candidate.resume.url}}" allowfullscreen width="100%" height="500px">
             </iframe>
             {% else %}
             <div class="card-body">

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'taggit',
     'stdimage',
     'nested_admin',
+    'tinymce',
 ]
 
 MIDDLEWARE = [

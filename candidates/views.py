@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Candidate
+from .models import Candidate, HRRemark
 from clients.models import Client, JobDetail
 from django.views import View
 from django.http import HttpResponse
 from django.views.generic import ListView
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Prefetch
 
 # class GreetingView(View):
 #     greeting = "Good Day"
@@ -61,3 +62,13 @@ def each_candidate(request, id):
         'candidate': candidate,
     }
     return render(request, 'candidates/each_candidate.html', context)
+
+
+def short_listed_candidates(request):
+    queryset = HRRemark.objects.only('considered_for')
+    candidates = Candidate.objects.prefetch_related(Prefetch('remarks', queryset=queryset))
+    print(queryset)
+    context = {
+        'candidates':candidates
+    }
+    return render(request, 'candidates/all.html', context)

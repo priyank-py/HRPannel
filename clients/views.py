@@ -5,8 +5,9 @@ from .models import Client
 from .forms import ClientForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from clients.models import Client, JobDetail
+from django.db.models import Q
 
-# Create your views here.
+
 # def all(request):
 #     pass
 
@@ -41,7 +42,10 @@ def all(request):
 
 def filtered_clients(request):
     q = request.GET.get('q')
-    client_list = Client.objects.all().filter(name__icontains=q)
+    company_type = request.GET.get('education')
+    client_list = Client.objects.all().filter(
+        Q(name__icontains=q) & 
+        Q(company_type__iexact=company_type ))
     page = request.GET.get('page', 1)
     paginator = Paginator(client_list, 10)
     try:
