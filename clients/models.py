@@ -92,7 +92,7 @@ class JobDetail(models.Model):
     min_experience = models.IntegerField(_("Minimum Experience"), blank=True, null=True)
 
     def __str__(self):
-        return self.designation
+        return f'{self.designation} in {self.client.name}'
 
     def save(self, *args, **kwargs):
         if self.designation:

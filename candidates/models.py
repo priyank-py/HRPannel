@@ -8,7 +8,7 @@ from django.utils import timezone
 from hr_profile.models import HRProfile
 from tinymce.models import HTMLField
 from taggit.managers import TaggableManager
-from clients.models import Client
+from clients.models import Client, JobDetail
 
 
 YEAR_CHOICES = [(i, i) for i in range(2000, datetime.date.today().year+3)] 
@@ -88,9 +88,10 @@ class Experience(models.Model):
     def __str__(self):
         return self.company
 
+    @property
     def total_experience(self):
         self.total = self.end - self.start
-        self.total_years = self.total.years
+        self.total_years = self.total.days
         return self.total_years
     
 
@@ -156,6 +157,6 @@ class HRRemark(models.Model):
     hr = models.ForeignKey(HRProfile, verbose_name=_("HR"), on_delete=models.DO_NOTHING, blank=True, null=True)
     remark = models.CharField(_("Remarks"), max_length=150, blank=True, null=True)
     status = models.CharField(_("Status"), max_length=50, blank=True, null=True, choices=STATUSES)
-    considered_for = models.ForeignKey(Client, verbose_name=_("Considered for"), on_delete=models.DO_NOTHING, blank=True, null=True)
+    considered_for = models.ForeignKey(JobDetail, verbose_name=_("Considered for"), on_delete=models.DO_NOTHING, blank=True, null=True)
     reviewed_on = models.DateField(_("Reviewed on"), auto_now=False, auto_now_add=False)
     

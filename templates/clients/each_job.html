@@ -13,20 +13,40 @@
             <span><i class="fas fa-dot-circle"></i>&nbsp;&nbsp; {{job.requirements}} requirements</span>
         </div>
     </header>
-    <section class="card card-body">
-        <h3 class="mb-4 ">Description:</h3>
-        <p>{{job.description|safe}}</p>
-        <h3>Required Skills:</h3>
-        <ol>
-            {% if job.required_skills %}
-            {% for skill in job.required_skills.all %}
-                <li>{{skill}} </li>
-            {% endfor %}
+    <div class="row col-md-12 mx-auto px-0">
+        <section class="card card-body col-md-8 col-lg-8 col-sm-12">
+            <h3 class="mb-4 ">Description:</h3>
+            <p>{{job.description|safe}}</p>
+            <h3>Required Skills:</h3>
+            <ol>
+                {% if job.required_skills %}
+                {% for skill in job.required_skills.all %}
+                    <li>{{skill}} </li>
+                {% endfor %}
+                
+                {% endif %}
+            </ol>
+        </section>
+        <div class="card card-body col-md-4 col-sm-12">
+            <h3 class="mb-4">Lined up candidates:</h3>
             
-            {% endif %}
-        </ol>
-    </section>
-
+            <ul class="my-4 list-group">
+                {% for candidate in candidates %}
+                    <li class="card mb-2">
+                        <div class="card-header d-flex align-items-center justify-content-start">
+                            {% if candidate.photo %}
+                            <span><img src="{{candidate.photo.thumbnail.url}}" width="50" height="50" class="rounded-circle" alt=""></span>
+                            {% else %}
+                            {% endif %}
+                            &nbsp;&nbsp;&nbsp;
+                            <span style="font-size:20px;"><b>{{candidate.name}}</b></span>
+                            <span>{{candidate.remarks.hr}}</span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </div>
 
 {% endblock content %}

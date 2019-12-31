@@ -86,6 +86,33 @@
                 
             </div>
         </div>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-muted">Considered Client(s)</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-borderless table-hover text-center">
+                    <thead>
+                        <th>HR</th>
+                        <th>Client</th>
+                        <th>Remark</th>
+                    </thead>
+                    <tbody>
+                    {% if candidate.remarks.all %}
+                    {% for remark in candidate.remarks.all %}
+
+                    <tr>
+                        <td><a href="{% url 'each_client' remark.considered_for.id %}">{{remark.considered_for.client}}</a></td>
+                        <td>{{remark.remark}}</td>
+                        <td>{{remark.hr.user.username}}</td>
+                    </tr>
+                    
+                    {% endfor %}
+                    {% endif %}
+                    </tbody>       
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 

@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.core import serializers
 from django.shortcuts import render, redirect, get_object_or_404
+from candidates.models import Candidate
 from .models import Client
 from .forms import ClientForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -105,9 +106,11 @@ def filtered_jobs(request):
 
 def job(request, id):
     job = get_object_or_404(JobDetail, id=id)
+    candidates = Candidate.objects.filter(remarks__considered_for=job)
     # print(job.required_skills.names())
     context = {
         'job': job,
+        'candidates': candidates,
     }
     return render(request, 'clients/each_job.html', context)
 
