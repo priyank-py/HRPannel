@@ -1,4 +1,4 @@
-Django==2.2.7
+Django==2.2.8
 django-admin-numeric-filter==0.1.5
 django-nested-admin==3.2.4
 django-stdimage==5.0.1
