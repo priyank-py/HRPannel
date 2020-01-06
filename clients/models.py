@@ -54,21 +54,27 @@ class Agreement(models.Model):
         ('unsigned', 'Unsigned'),
     )
     client = models.ForeignKey(Client, verbose_name=_("client"), related_name="client_agreement", on_delete=models.CASCADE, blank=True, null=True)
+    title = models.CharField(_("Agreement Title"), max_length=50, blank=True, null=True)
     agreement = models.FileField(_("Agreement Copy"), upload_to='Agreements/%d-%m-%Y', max_length=100, blank=True, null=True)
     agreement_status = models.CharField(_("Agreement Status"), max_length=50, choices=AGREEMENT_STATUS)
     start_date = models.DateField(_("Start Date"), auto_now=False, auto_now_add=False)
     end_date = models.DateField(_("End Date"), auto_now=False, auto_now_add=False)
     commission = models.FloatField(_("Commission Percentage"), blank=True, null=True)
     
+    # def __str__(self):
+    #     return f'{self.client.name.capitalize()} Ag.({self.start_date} - {self.end_date})'
     def __str__(self):
-        return f'{self.client.name.capitalize()} Ag.({self.start_date} - {self.end_date})'
-     
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.title:
+            self.title = f'{self.client.name.capitalize()} Ag.({self.start_date} - {self.end_date})'
+        super(Agreement, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = _("Agreement")
         verbose_name_plural = _("Agreements")
-
-
+        
 
 class JobDetail(models.Model):
 
@@ -93,6 +99,9 @@ class JobDetail(models.Model):
 
     def __str__(self):
         return f'{self.designation} in {self.client.name}'
+    
+    def get_absolute_url(self):
+        return reverse("each_job", kwargs={"pk": self.pk})
 
     def save(self, *args, **kwargs):
         if self.designation:

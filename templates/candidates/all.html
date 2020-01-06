@@ -48,7 +48,7 @@
                 <tr>
                     <td class="width-sm"><span>{% if candidate.photo %}<img class="rounded-circle" src="{{candidate.photo.thumbnail.url}}" alt="">{% endif %}</span></td>
                     <td class="width-sm" scope="row">{{candidate.id}}</td>
-                    <td><a href="{% url 'each_candidate' candidate.id %}"> {{candidate.name}}</a></td>
+                    <td><a href="{% url 'Candidate_detail' candidate.id %}"> {{candidate.name}}</a></td>
                     <td>{{candidate.phone_number}}</td>
                     <td>{{candidate.email}} </td>
                     <td>{{candidate.remarks.last.status}} </td>

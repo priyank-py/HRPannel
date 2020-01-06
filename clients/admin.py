@@ -36,13 +36,20 @@ class AgreementInline(nested_admin.NestedStackedInline):
     
     inlines = (JobDetailInline,)
 
+@admin.register(Agreement)
+class AgreementAdmin(admin.ModelAdmin):
+    ordering = ['end_date']
+    list_display = ['title', 'agreement_status', 'start_date', 'end_date', 'commission']
+    search_fields = ['title',]
 
 @admin.register(JobDetail)
 class JobDetailAdmin(NumericFilterModelAdmin):
-    list_display = ['id', 'client', 'designation', 'min_salary', 'max_salary', 'min_experience',]
+    list_display = ['id', 'agreement', 'client', 'designation', 'min_salary', 'max_salary', 'min_experience',]
+    list_display_links = ['id', 'agreement']
     exclude = ('client',)
-    list_filter = ['client', 'designation', ('min_salary', RangeNumericFilter), ('max_salary', RangeNumericFilter), ('min_experience', CustomSliderNumericFilter)]
-
+    list_filter = ['client', 'client__company_type','designation', ('min_salary', RangeNumericFilter), ('max_salary', RangeNumericFilter), ('min_experience', CustomSliderNumericFilter)]
+    search_fields = ['id', 'client', 'designation',]
+    autocomplete_fields = ['agreement',]
 
 
 @admin.register(Client)
@@ -50,6 +57,7 @@ class ClientAdmin(nested_admin.NestedModelAdmin, NumericFilterModelAdmin):
     list_display = ['name', 'company_type']
     list_filter = ['company_type', ('client_agreement__job_agreement__min_experience', CustomSliderNumericFilter)]
     exclude = ('client_agreement__job_agreement__client',)
+    search_fields = ['name', 'address', 'client_cp__name', 'client_cp__contact_no', 'client_cp__alternate_no']
     inlines = (ContactPersonInline, AgreementInline)
 
 

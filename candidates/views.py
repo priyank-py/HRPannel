@@ -56,8 +56,8 @@ def filtered_candidates(request):
         # return super().get_queryset()
     
 
-def each_candidate(request, id):
-    candidate = get_object_or_404(Candidate, id=id)
+def each_candidate(request, pk):
+    candidate = get_object_or_404(Candidate, id=pk)
     context = {
         'candidate': candidate,
     }
@@ -72,3 +72,6 @@ def short_listed_candidates(request):
         'candidates':candidates
     }
     return render(request, 'candidates/all.html', context)
+
+def advance_search(request):
+    return render(request, 'candidates/advanced_search.html')

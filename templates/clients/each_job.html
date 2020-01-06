@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 
 <div class="row">
@@ -35,11 +35,13 @@
                     <li class="card mb-2">
                         <div class="card-header d-flex align-items-center justify-content-start">
                             {% if candidate.photo %}
-                            <span><img src="{{candidate.photo.thumbnail.url}}" width="50" height="50" class="rounded-circle" alt=""></span>
+                            <span><img src="{{candidate.photo.thumbnail.url}}" width="25" height="25" class="rounded-circle mr-4" alt=""></span>
+                            
                             {% else %}
+                            <span><img src="{% static 'img/default_profile.png' %}" width="25" height="25" class="rounded-circle mr-4" alt=""></span>
                             {% endif %}
                             &nbsp;&nbsp;&nbsp;
-                            <span style="font-size:20px;"><b>{{candidate.name}}</b></span>
+                            <span style="font-size:20px;"><a href="{% url 'Candidate_detail' candidate.id %}"><b>{{candidate.name}}</b></a></span>
                             <span>{{candidate.remarks.hr}}</span>
                         </div>
                     </li>

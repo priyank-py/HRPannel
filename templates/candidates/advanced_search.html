@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <form action="{% url 'advance_filter' %}">
+            <div class="row my-3" >
+                <label for="designation" class="col-2 col-form-label">Designation</label>
+                <div class="col-10">
+                    <input type="text" class="form-control" name="designation">
+                    <small class="mx-2 text-danger">*No max limit</small>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-2"></div>
+                <div class="col-9 mr-2">
+                    <input type="radio" name="keyword" class="mr-2">Keyword search
+                    <input class="ml-5 mr-2" type="radio" name="boolean">Boolean search            
+                </div>
+            </div>
+            <div class="row my-3" >
+                <label for="anykeywords" class="col-2 col-form-label">Any of these keywords</label>
+                <div class="col-10">
+                    <input type="text" class="form-control" name="anykeywords">
+                </div>
+            </div>
+            <div class="row my-3" >
+                <label for="allkeywords" class="col-2 col-form-label">All of these keywords</label>
+                <div class="col-10">
+                    <input type="text" class="form-control" name="allkeywords">
+                </div>
+            </div>
+            <div class="row my-3" >
+                <label for="encludekeywords" class="col-2 col-form-label">Enclude these keywords</label>
+                <div class="col-10">
+                    <input type="text" class="form-control" name="encludekeywords">
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock content %}

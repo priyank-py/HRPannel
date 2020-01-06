@@ -63,8 +63,8 @@ def filtered_clients(request):
     return render(request, 'clients/all.html', context)
 
 
-def each_client(request, id):
-    client = get_object_or_404(Client, id=id)
+def each_client(request, pk):
+    client = get_object_or_404(Client, id=pk)
     
     context = {
         'client': client,
@@ -104,8 +104,8 @@ def filtered_jobs(request):
     }
     return render(request, 'clients/all_jobs.html', context)
 
-def job(request, id):
-    job = get_object_or_404(JobDetail, id=id)
+def job(request, pk):
+    job = get_object_or_404(JobDetail, id=pk)
     candidates = Candidate.objects.filter(remarks__considered_for=job)
     # print(job.required_skills.names())
     context = {
