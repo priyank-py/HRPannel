@@ -3,7 +3,7 @@
 {% block content %}
 
     <div class="container">
-        <form action="{% url 'advance_filter' %}">
+        <form action="{% url 'advance_result' %}" class="mb-5">
             <div class="row my-3" >
                 <label for="designation" class="col-2 col-form-label">Designation</label>
                 <div class="col-10">
@@ -14,8 +14,8 @@
             <div class="row mb-3">
                 <div class="col-2"></div>
                 <div class="col-9 mr-2">
-                    <input type="radio" name="keyword" class="mr-2">Keyword search
-                    <input class="ml-5 mr-2" type="radio" name="boolean">Boolean search            
+                    <input type="radio" name="search_type" class="mr-2">Keyword search
+                    <input class="ml-5 mr-2" type="radio" name="search_type">Boolean search            
                 </div>
             </div>
             <div class="row my-3" >
@@ -31,41 +31,131 @@
                 </div>
             </div>
             <div class="row my-3" >
-                <label for="encludekeywords" class="col-2 col-form-label">Enclude these keywords</label>
+                <label for="excludekeywords" class="col-2 col-form-label">Exclude these keywords</label>
                 <div class="col-10">
-                    <input type="text" class="form-control" name="encludekeywords">
+                    <input type="text" class="form-control" name="excludekeywords">
                 </div>
             </div>
             <div class="row my-3">
+
                 <label for="keysin" class="col-2 col-form-label">Search keywords in</label>
                 <div class="col-10">
                     <span class="mr-4">
-                        <input type="radio" name="keysin" id="full_profile">
+                        <input type="radio" name="search_in" value="full_profile" id="keysin">
                         <label for="full_profile">Full Profile</label>
                     </span>
                     <span class="mr-4">
-                        <input type="radio" name="keysin" id="full_profile">
-                        <label for="full_profile">Profile Title Or Key Skills</label>
+                        <input type="radio" name="search_in" value="profile_title_or_skill" id="keysin">
+                        <label for="keysin">Profile Title Or Key Skills</label>
                     </span>
                     <span class="mr-4">
-                        <input type="radio" name="keysin" id="full_profile">
-                        <label for="full_profile">Key Skills</label>
+                        <input type="radio" name="search_in" value="keyskill" id="keysin">
+                        <label for="keysin">Key Skills</label>
                     </span>
                     <span class="mr-4">
-                        <input type="radio" name="keysin" id="full_profile">
-                        <label for="full_profile">Profile Title</label>
+                        <input type="radio" name="search_in" value="profile_title" id="keysin">
+                        <label for="keysin">Profile Title</label>
                     </span>
                     <div>
-                        <input type="checkbox" name="keyinclude" id="keyinclude">
-                        <label for="">Also include without resume</label>
+                        <input type="checkbox" name="include_without" value="True" id="keyinclude">
+                        <label for="keyinclude">Also include without resume</label>
                     </div>
                     <div>
-                        <input type="checkbox" name="keyinclude" id="keyinclude">
+                        <input type="checkbox" name="exclude_without" id="keyinclude">
                         <label for="">Hide Profile without resume</label>
                     </div>
                 </div>
-                
             </div>
+            
+            <div class="row my-3" >
+                <label for="current_location" class="col-2 col-form-label">Current location</label>
+                <div class="col-10">
+                    <input type="text" class="form-control" name="current_location" id="current_location">
+                    <div class="d-flex mt-1 ml-2">
+                        <input type="radio" name="location_gate" value="and" class="">&nbsp;&nbsp;And
+                        <input type="radio" name="location_gate" value="or" class="ml-4">&nbsp;&nbsp;Or
+                    </div>
+                </div>
+            </div>
+            <div class="row my-3" >
+                <label for="preferred_location" class="col-2 col-form-label">Preferred location</label>
+                <div class="col-10">
+                    <input type="text" class="form-control" name="preferred_location">
+                </div>
+            </div>
+            <div class="row my-3" >
+                <label for="total_experience" class="col-2 col-form-label">Total Experience</label>
+                <div class="col-10 d-flex justify-content-between">
+                    <input type="text" class="form-control" style="width: 45%;" name="min_experience" placeholder="min salary">
+                    <input type="text" class="form-control" style="width: 45%;" name="max_experience" placeholder="max salary">
+                </div>
+            </div>
+            <div class="row my-3" >
+                <label for="salary" class="col-2 col-form-label">Salary</label>
+                <div class="col-10" style="box-sizing: border-box;">
+                    <div class="d-flex justify-content-between">
+                        <input type="text" class="form-control d-inline" style="width: 45%;" name="min_salary" placeholder="min salary">
+                        <input type="text" class="form-control d-inline" style="width: 45%;" name="max_salary" placeholder="max salary">
+                    </div>
+                    <div ><input type="checkbox" name="zerosalary" id="zero" class="mt-1 ml-2">&nbsp; Also include the candidate with zero salary.</div >
+                </div>
+            </div>
+            <div class="row my-3" >
+                <label for="encludekeywords" class="col-2 col-form-label">Notice Period</label>
+                <div class="col-10">
+                    <input type="text" class="form-control" name="notice">
+                </div>
+            </div>
+            <h4 class="ml-2 my-4 text-muted">
+                Employment Details
+            </h4>
+            <div class="row my-3" >
+                <label for="current_industry" class="col-2 col-form-label">Current industry</label>
+                <div class="col-10">
+                    <input type="text" class="form-control" name="current_industry">
+                </div>
+            </div>
+            <div class="row my-3" >
+                <label for="current_department" class="col-2 col-form-label">Current Department /<br>Functional area</label>
+                <div class="col-10">
+                    <input type="text" class="form-control" name="current_department">
+                </div>
+            </div>
+            <div class="row my-3" >
+                <label for="ages" class="col-2 col-form-label">Age</label>
+                <div class="col-10 d-flex justify-content-between">
+                    <input type="text" class="form-control" style="width: 45%;" name="min_age" id="ages" placeholder="min Age">
+                    <input type="text" class="form-control" style="width: 45%;" name="max_age" id="ages" placeholder="max Age">
+                </div>
+            </div>
+            <div class="row my-3" >
+                <label for="teamsize" class="col-2 col-form-label">Team Size Managed</label>
+                <div class="col-10">
+                    <input type="text" class="form-control" name="teamsize">
+                </div>
+            </div>
+            <div class="row my-3" >
+                <label for="include_companies" class="col-2 col-form-label">Include companies</label>
+                <div class="col-10">
+                    <input type="text" class="form-control" name="include_companies" id="include_companies">
+                </div>
+            </div>
+            <div class="row my-3" >
+                <label for="exclude_companies" class="col-2 col-form-label">Exclude companies</label>
+                <div class="col-10">
+                    <input type="text" class="form-control" name="exclude_companies" id="exclude_companies">
+                </div>
+            </div>
+            <h4 class="ml-2 my-4 text-muted">
+                Education Details
+            </h4>
+            <div class="row my-3" >
+                <label for="degree" class="col-2 col-form-label">Degree</label>
+                <div class="col-10">
+                    <input type="text" class="form-control" name="degree" id="degree" placeholder="select degree">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-dark ">Search</button>
         </form>
     </div>
 

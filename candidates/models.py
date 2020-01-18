@@ -24,6 +24,7 @@ class Candidate(models.Model):
     alternate_number = models.CharField(_("Alternate No."), max_length=50, blank=True, null=True)
     location = models.CharField(_("Location"), max_length=50)
     gender = models.CharField(_("Gender"), choices=(('male', 'Male'), ('female', 'Female')), max_length=50)
+    designation = models.CharField(_("Designation"), max_length=50, blank=True, null=True)
     current_salary = models.FloatField(_("Current CTC (in LPA)"), blank=True, null=True)
     expected_salary = models.FloatField(_("Expected CTC (in LPA)"), blank=True, null=True)
     resume = models.FileField(_("Candidate Resume"), upload_to='Resumes/%d-%b', max_length=100, blank=True, null=True)
