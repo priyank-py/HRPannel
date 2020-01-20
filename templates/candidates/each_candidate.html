@@ -76,7 +76,7 @@
     
     </div>
     <div class="col-md-4">
-        <div class="card">
+        <div class="card p-4">
             
             {% if candidate.photo %}
                 <img class="rounded-circle" src="{{candidate.photo.medium.url}}" alt="">
@@ -95,6 +95,7 @@
                     <thead>
                         <th>HR</th>
                         <th>Client</th>
+                        <th>Status</th>
                         <th>Remark</th>
                     </thead>
                     <tbody>
@@ -102,9 +103,16 @@
                     {% for remark in candidate.remarks.all %}
 
                     <tr>
-                        <td><a href="{% url 'each_client' remark.considered_for.id %}">{{remark.considered_for.client}}</a></td>
-                        <td>{{remark.remark}}</td>
                         <td>{{remark.hr.user.username}}</td>
+                            <td>
+                            {% if remark.considered_for.client %}
+                                <a href="{% url 'each_client' remark.considered_for.client.id %}">
+                                {{remark.considered_for.client}}
+                            </a>
+                            {% endif %}
+                        </td>
+                        <td>{{remark.status}} </td>
+                        <td>{{remark.remark}}</td>
                     </tr>
                     
                     {% endfor %}

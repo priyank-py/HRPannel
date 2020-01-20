@@ -23,10 +23,12 @@ class Candidate(models.Model):
     phone_number = models.CharField(_("Phone No."), max_length=50)
     alternate_number = models.CharField(_("Alternate No."), max_length=50, blank=True, null=True)
     location = models.CharField(_("Location"), max_length=50)
+    preferred_location = models.CharField(_("Preferred Location"), max_length=50, blank=True, null=True)
     gender = models.CharField(_("Gender"), choices=(('male', 'Male'), ('female', 'Female')), max_length=50)
     designation = models.CharField(_("Designation"), max_length=50, blank=True, null=True)
     current_salary = models.FloatField(_("Current CTC (in LPA)"), blank=True, null=True)
     expected_salary = models.FloatField(_("Expected CTC (in LPA)"), blank=True, null=True)
+    notice_period = models.IntegerField(_("Notice Period (in days)"), blank=True, null=True)
     resume = models.FileField(_("Candidate Resume"), upload_to='Resumes/%d-%b', max_length=100, blank=True, null=True)
     photo = StdImageField(upload_to=upload_photo_to, blank=True, null=True, variations={
         'large': (640, 640),
@@ -40,6 +42,11 @@ class Candidate(models.Model):
 
     def __str__(self):
         return self.name
+
+    def age(self):
+        if self.dob:
+            duration = datetime.date.today() - self.dob
+            return duration//365.2425
 
     def get_absolute_url(self):
         return reverse("Candidate_detail", kwargs={"pk": self.pk})
@@ -91,9 +98,14 @@ class Experience(models.Model):
 
     @property
     def total_experience(self):
-        self.total = self.end - self.start
-        self.total_years = self.total.days
-        return self.total_years
+        if self.end:
+            self.total = self.end - self.start
+            self.total_years = self.total.days
+            return self.total_years
+        if self.current_company:
+            self.total = datetime.date.today() - self.start
+            self.total_years = self.total.days
+            return self.total_years
     
 
     def get_absolute_url(self):
