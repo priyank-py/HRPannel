@@ -11,4 +11,4 @@ python-utils==2.3.0
 pytz==2019.3
 reportlab==3.5.32
 six==1.13.0
-sqlparse==0.3.0
+sqlparse==0.4.4
